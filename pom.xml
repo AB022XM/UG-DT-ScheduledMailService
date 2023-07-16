@@ -16,7 +16,7 @@
             The spring-boot version should match the one managed by https://mvnrepository.com/artifact/tech.jhipster/jhipster-dependencies/${jhipster-dependencies.version}
         -->
         <maven.version>3.2.5</maven.version>
-        <java.version>17</java.version>
+        <java.version>16</java.version>
         <node.version>v18.16.1</node.version>
         <npm.version>9.8.0</npm.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,7 +35,7 @@
         <checksum-maven-plugin.version>1.11</checksum-maven-plugin.version>
         <frontend-maven-plugin.version>1.13.4</frontend-maven-plugin.version>
         <git-commit-id-maven-plugin.version>6.0.0</git-commit-id-maven-plugin.version>
-        <hibernate.version>6.1.7.Final</hibernate.version>
+        <hibernate.version>6.2.3.Final</hibernate.version>
         <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
         <jaxb-runtime.version>4.0.3</jaxb-runtime.version>
         <jib-maven-plugin.architecture>amd64</jib-maven-plugin.architecture>
@@ -87,77 +87,125 @@
     </dependencyManagement>
 
     <dependencies>
+      <!--  <dependency>
+            <groupId>tech.jhipster</groupId>
+            <artifactId>jhipster-framework</artifactId>
+            <version>7.9.3</version>
+        </dependency>-->
         <dependency>
             <groupId>tech.jhipster</groupId>
             <artifactId>jhipster-framework</artifactId>
+            <version>8.0.0-beta.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
+            <version>3.0.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-loader-tools</artifactId>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.retrofit</groupId>
+            <artifactId>converter-gson</artifactId>
+            <version>2.0.0-beta2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>adapter-rxjava2</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>retrofit</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>logging-interceptor</artifactId>
+            <version>4.9.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>5.0.0-alpha.11</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>3.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
+            <version>3.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <version>3.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <version>3.1.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>3.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
+            <version>3.0.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-data</artifactId>
+            <version>6.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
+            <version>6.0.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <version>2.0.4</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -166,18 +214,22 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-hppc</artifactId>
+            <version>2.14.2</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.14.2</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-jaxb-annotations</artifactId>
+            <version>2.14.2</version>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.32</version>
         </dependency>
         <dependency>
             <groupId>com.tngtech.archunit</groupId>
@@ -196,22 +248,34 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
+            <version>5.0.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson -->
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>converter-gson</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-core</artifactId>
+            <version>4.2.16</version>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>1.10.5</version>
         </dependency>
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.orm</groupId>
@@ -221,11 +285,13 @@
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>6.2.0.CR3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
+            <version>8.0.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -243,6 +309,7 @@
             <version>${mapstruct.version}</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>jdbc</artifactId>
@@ -511,7 +578,6 @@
                     <version>${maven-eclipse-plugin.version}</version>
                     <configuration>
                         <downloadSources>true</downloadSources>
-                        <downloadJavadocs>true</downloadJavadocs>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -779,11 +845,6 @@
                             <version>${liquibase.version}</version>
                         </dependency>
                         <dependency>
-                            <groupId>org.liquibase.ext</groupId>
-                            <artifactId>liquibase-hibernate6</artifactId>
-                            <version>${liquibase.version}</version>
-                        </dependency>
-                        <dependency>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-starter-data-jpa</artifactId>
                             <version>${spring-boot.version}</version>
@@ -823,6 +884,7 @@
                 <liquibase-plugin.url>jdbc:mysql://localhost:3306/ScheduledMailService</liquibase-plugin.url>
                 <liquibase-plugin.username>root</liquibase-plugin.username>
                 <liquibase-plugin.password/>
+
             </properties>
             <dependencies>
                 <dependency>

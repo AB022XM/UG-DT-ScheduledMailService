@@ -1,0 +1,47 @@
+{
+  "scheduledMailServiceApp": {
+    "alertsHistoryTb": {
+      "home": {
+        "title": "Alerts History Tbs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Alerts History Tb",
+        "createOrEditLabel": "Create or edit a Alerts History Tb",
+        "notFound": "No Alerts History Tbs found"
+      },
+      "created": "A new Alerts History Tb is created with identifier {{ param }}",
+      "updated": "A Alerts History Tb is updated with identifier {{ param }}",
+      "deleted": "A Alerts History Tb is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Alerts History Tb {{ id }}?"
+      },
+      "detail": {
+        "title": "Alerts History Tb"
+      },
+      "id": "ID",
+      "historyAlertId": "History Alert Id",
+      "historyAlertTemId": "History Alert Tem Id",
+      "historyAlertType": "History Alert Type",
+      "historyAlertStatus": "History Alert Status",
+      "historyAlertMessage": "History Alert Message",
+      "historyAlertDate": "History Alert Date",
+      "historyAlertRetries": "History Alert Retries",
+      "historyAlertTimestamp": "History Alert Timestamp",
+      "historyAlertPostedBy": "History Alert Posted By",
+      "historyAlertPostedDate": "History Alert Posted Date",
+      "historyAlertInternalErrorcode": "History Alert Internal Errorcode",
+      "historyAlertRawRequest": "History Alert Raw Request",
+      "historyAlertRawResponse": "History Alert Raw Response",
+      "historyAlertFreeField1": "History Alert Free Field 1",
+      "historyAlertFreeField2": "History Alert Free Field 2",
+      "historyAlertFreeField3": "History Alert Free Field 3",
+      "historyAlertFreeField4": "History Alert Free Field 4",
+      "historyAlertFreeField5": "History Alert Free Field 5",
+      "historyAlertFreeField6": "History Alert Free Field 6",
+      "historyAlertFreeField7": "History Alert Free Field 7",
+      "historyAlertFreeField8": "History Alert Free Field 8",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "historyStatus": "History Status"
+    }
+  }
+}

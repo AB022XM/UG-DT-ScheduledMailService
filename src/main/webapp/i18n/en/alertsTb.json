@@ -1,0 +1,48 @@
+{
+  "scheduledMailServiceApp": {
+    "alertsTb": {
+      "home": {
+        "title": "Alerts Tbs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Alerts Tb",
+        "createOrEditLabel": "Create or edit a Alerts Tb",
+        "notFound": "No Alerts Tbs found"
+      },
+      "created": "A new Alerts Tb is created with identifier {{ param }}",
+      "updated": "A Alerts Tb is updated with identifier {{ param }}",
+      "deleted": "A Alerts Tb is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Alerts Tb {{ id }}?"
+      },
+      "detail": {
+        "title": "Alerts Tb"
+      },
+      "id": "Id",
+      "alertId": "Alert Id",
+      "alertTemId": "Alert Tem Id",
+      "alertType": "Alert Type",
+      "alertStatus": "Alert Status",
+      "alertMessage": "Alert Message",
+      "alertDate": "Alert Date",
+      "alertRetries": "Alert Retries",
+      "alertTimestamp": "Alert Timestamp",
+      "alertPostedBy": "Alert Posted By",
+      "alertPostedDate": "Alert Posted Date",
+      "alertInternalErrorcode": "Alert Internal Errorcode",
+      "rawRequest": "Raw Request",
+      "rawResponse": "Raw Response",
+      "alertFreeField1": "Alert Free Field 1",
+      "alertFreeField2": "Alert Free Field 2",
+      "alertFreeField3": "Alert Free Field 3",
+      "alertFreeField4": "Alert Free Field 4",
+      "alertFreeField5": "Alert Free Field 5",
+      "alertFreeField6": "Alert Free Field 6",
+      "alertFreeField7": "Alert Free Field 7",
+      "alertFreeField8": "Alert Free Field 8",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "status": "Status",
+      "alertsTemplateTb": "Alerts Template Tb"
+    }
+  }
+}

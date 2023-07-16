@@ -2,8 +2,6 @@ package ug.co.absa.notify.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -11,45 +9,66 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.context.Context;
+import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.spring6.SpringTemplateEngine;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tech.jhipster.config.JHipsterProperties;
+import ug.co.absa.notify.domain.AlertsHistoryTb;
+import ug.co.absa.notify.domain.AlertsTb;
 import ug.co.absa.notify.domain.User;
+import ug.co.absa.notify.domain.models.*;
+import ug.co.absa.notify.repository.AlertsHistoryTbRepository;
+import ug.co.absa.notify.repository.AlertsTbRepository;
+import ug.co.absa.notify.repository.AlertsTemplateTbRepository;
+import ug.co.absa.notify.repository.ChannelTxnRepository;
+import ug.co.absa.notify.utility.ApiInterface;
+import ug.co.absa.notify.utility.Helpers;
+import ug.co.absa.notify.utility.ServiceGenerator;
 
-/**
- * Service for sending emails.
- * <p>
- * We use the {@link Async} annotation to send emails asynchronously.
- */
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 @Service
+@Async
+@Transactional
 public class MailService {
 
     private final Logger log = LoggerFactory.getLogger(MailService.class);
 
-    private static final String USER = "user";
-
-    private static final String BASE_URL = "baseUrl";
-
     private final JHipsterProperties jHipsterProperties;
+
+
+    public final AlertsTbRepository alertsTbRepository;
 
     private final JavaMailSender javaMailSender;
 
-    private final MessageSource messageSource;
+    private final ChannelTxnRepository channelTxnRepository;
+    public final AlertsTemplateTbRepository alertsTemplateTbRepository;
 
-    private final SpringTemplateEngine templateEngine;
+    public final AlertsHistoryTbRepository alertsHistoryTbRepository;
 
     public MailService(
         JHipsterProperties jHipsterProperties,
         JavaMailSender javaMailSender,
-        MessageSource messageSource,
-        SpringTemplateEngine templateEngine
-    ) {
+        AlertsTbRepository alertsTbRepository,
+        ChannelTxnRepository channelTxnRepository,
+        AlertsHistoryTbRepository alertsHistoryTbRepository,
+        AlertsTemplateTbRepository alertsTemplateTbRepository) {
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
-        this.messageSource = messageSource;
-        this.templateEngine = templateEngine;
+        this.alertsTbRepository = alertsTbRepository;
+        this.channelTxnRepository = channelTxnRepository;
+        this. alertsHistoryTbRepository = alertsHistoryTbRepository;
+        this.alertsTemplateTbRepository = alertsTemplateTbRepository;
+
+
     }
+
 
     @Async
     public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
@@ -79,7 +98,7 @@ public class MailService {
 
     @Async
     public void sendEmailFromTemplate(User user, String templateName, String titleKey) {
-        if (user.getEmail() == null) {
+     /*   if (user.getEmail() == null) {
             log.debug("Email doesn't exist for user '{}'", user.getLogin());
             return;
         }
@@ -89,7 +108,7 @@ public class MailService {
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
-        sendEmail(user.getEmail(), subject, content, false, true);
+        sendEmail(user.getEmail(), subject, content, false, true);*/
     }
 
     @Async
@@ -109,4 +128,76 @@ public class MailService {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
     }
+
+
+
+
+
+
+    //@Async
+   // @Scheduled(fixedDelay = 10, initialDelay = 5, timeUnit = TimeUnit.SECONDS)
+    public void sendEmailScheduled() {
+        List<AlertsTb>  alertsTbList= alertsTbRepository.findAll();
+        if(!alertsTbList.isEmpty())
+        {
+
+            alertsTbList.forEach(alertsTb ->{
+                    log.debug(":::::::::::::::::::::SENDING EMAIL:::::::::::::::::::::::\n");
+                    log.debug("CONTENT :  "+alertsTb.toString());
+                    sendoutMail(alertsTb);
+                    try {
+                        Thread.sleep(1000);
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            );
+        }else {
+            log.debug("No alerts found to send");
+        }
+    }
+
+    public void sendoutMail(AlertsTb alertsTb)
+    {
+        EmailContent emailContent = Helpers.generateEmailContent(alertsTb);
+        ApiInterface apiInterface = ServiceGenerator.createService(ApiInterface.class);
+
+        Call<EmailApiResponse> call = apiInterface.sendMail(emailContent);
+        call.enqueue(new Callback<EmailApiResponse>() {
+            @Override
+            public void onResponse(Call<EmailApiResponse> call, Response<EmailApiResponse> response) {
+                log.debug(":::::::::::::::::::::SENT MAIL:::::::::::::::::::::::\n");
+                log.debug("****DETAILS: "+ response.body());
+                try {
+                    Thread.sleep(500);
+
+                    AlertsHistoryTb.InsertAlertsHistoryTbFromAlertsTbObj( alertsTb, alertsHistoryTbRepository) ;
+                    channelTxnRepository.UPDATE_CHANNEL_TXN_STATUS("3",alertsTb.getAlertId());
+
+
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+
+            }
+
+
+            @Override
+            public void onFailure(Call<EmailApiResponse> call, Throwable throwable) {
+                log.debug(":::::::::::::::::::::SENT MAIL FAILED:::::::::::::::::::::::\n");
+
+            }
+        });
+
+    }
+
+
+
+
 }
+
+

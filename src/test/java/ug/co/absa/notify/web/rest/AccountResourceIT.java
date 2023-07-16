@@ -25,7 +25,6 @@ import ug.co.absa.notify.security.AuthoritiesConstants;
 import ug.co.absa.notify.service.UserService;
 import ug.co.absa.notify.service.dto.AdminUserDTO;
 import ug.co.absa.notify.service.dto.PasswordChangeDTO;
-import ug.co.absa.notify.service.dto.UserDTO;
 import ug.co.absa.notify.web.rest.vm.KeyAndPasswordVM;
 import ug.co.absa.notify.web.rest.vm.ManagedUserVM;
 

@@ -1,7 +1,7 @@
 package ug.co.absa.notify.security;
 
 /**
- * Constants for Spring Security authorities.
+ * AlertsStatus for Spring Security authorities.
  */
 public final class AuthoritiesConstants {
 

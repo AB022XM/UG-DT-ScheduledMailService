@@ -6,7 +6,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-import ug.co.absa.notify.ScheduledMailServiceApp;
 import ug.co.absa.notify.config.AsyncSyncConfiguration;
 import ug.co.absa.notify.config.EmbeddedSQL;
 

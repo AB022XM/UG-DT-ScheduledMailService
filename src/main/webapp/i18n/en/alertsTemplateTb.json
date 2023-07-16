@@ -1,0 +1,43 @@
+{
+  "scheduledMailServiceApp": {
+    "alertsTemplateTb": {
+      "home": {
+        "title": "Alerts Template Tbs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Alerts Template Tb",
+        "createOrEditLabel": "Create or edit a Alerts Template Tb",
+        "notFound": "No Alerts Template Tbs found"
+      },
+      "created": "A new Alerts Template Tb is created with identifier {{ param }}",
+      "updated": "A Alerts Template Tb is updated with identifier {{ param }}",
+      "deleted": "A Alerts Template Tb is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Alerts Template Tb {{ id }}?"
+      },
+      "detail": {
+        "title": "Alerts Template Tb"
+      },
+      "id": "Id",
+      "alertTemplateId": "Alert Template Id",
+      "alertroductId": "Alertroduct Id",
+      "alertTemplatename": "Alert Templatename",
+      "alertTemplateDetails": "Alert Template Details",
+      "alertTemplateStatus": "Alert Template Status",
+      "alertTemplateretries": "Alert Templateretries",
+      "alertTemplateTimestamp": "Alert Template Timestamp",
+      "alertTemplatepostedby": "Alert Templatepostedby",
+      "alertTemplatepostedDate": "Alert Templateposted Date",
+      "alertTmpFreeField1": "Alert Tmp Free Field 1",
+      "alertTmpFreeField2": "Alert Tmp Free Field 2",
+      "alertTmpFreeField3": "Alert Tmp Free Field 3",
+      "alertTmpFreeField4": "Alert Tmp Free Field 4",
+      "alertTmpFreeField5": "Alert Tmp Free Field 5",
+      "alertTmpFreeField6": "Alert Tmp Free Field 6",
+      "alertTmpFreeField7": "Alert Tmp Free Field 7",
+      "alertTmpFreeField8": "Alert Tmp Free Field 8",
+      "timestamp": "Timestamp",
+      "isActive": "Is Active",
+      "alertsTb": "Alerts Tb"
+    }
+  }
+}

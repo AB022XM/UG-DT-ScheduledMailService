@@ -14,13 +14,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import tech.jhipster.config.DefaultProfileUtil;
 import tech.jhipster.config.JHipsterConstants;
 import ug.co.absa.notify.config.ApplicationProperties;
-import ug.co.absa.notify.config.CRLFLogConverter;
 
 @SpringBootApplication
 @EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
+@EnableScheduling
 public class ScheduledMailServiceApp {
 
     private static final Logger log = LoggerFactory.getLogger(ScheduledMailServiceApp.class);
@@ -84,16 +85,11 @@ public class ScheduledMailServiceApp {
         } catch (UnknownHostException e) {
             log.warn("The host name could not be determined, using `localhost` as fallback");
         }
-        log.info(
-            CRLFLogConverter.CRLF_SAFE_MARKER,
-            """
-
-                ----------------------------------------------------------
-                \tApplication '{}' is running! Access URLs:
-                \tLocal: \t\t{}://localhost:{}{}
-                \tExternal: \t{}://{}:{}{}
-                \tProfile(s): \t{}
-                ----------------------------------------------------------""",
+            log.info(
+            "\n------------------------------------------------------------\n\t" +
+                "Application '{}' is running! Access URLs:\n\t" +
+                "Local: \t\t{}://localhost:{}{}\n\t" +
+                "External: \t{}://{}:{}{}\n\t" +
             env.getProperty("spring.application.name"),
             protocol,
             serverPort,
