@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -106,7 +105,7 @@ public class AlertsTbResource {
      * or with status {@code 500 (Internal Server Error)} if the alertsTb couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/alerts-tbs/{id}", consumes = { "application/json", "application/merge-patch+json" })
+/*    @PatchMapping(value = "/alerts-tbs/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<AlertsTb> partialUpdateAlertsTb(
         @PathVariable(value = "id", required = false) final UUID id,
         @NotNull @RequestBody AlertsTb alertsTb
@@ -207,7 +206,7 @@ public class AlertsTbResource {
             result,
             HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, alertsTb.getId().toString())
         );
-    }
+    }*/
 
     /**
      * {@code GET  /alerts-tbs} : get all the alertsTbs.

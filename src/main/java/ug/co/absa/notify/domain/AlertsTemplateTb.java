@@ -5,9 +5,8 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
-import jakarta.persistence.*;
 
+import jakarta.persistence.*;
 
 /**
  * A AlertsTemplateTb.
@@ -22,7 +21,7 @@ public class AlertsTemplateTb implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id", length = 36)
-    private UUID id;
+    private String id;
 
     @Column(name = "alert_template_id")
     private String alertTemplateId;
@@ -87,22 +86,22 @@ public class AlertsTemplateTb implements Serializable {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToMany()
+    @OneToMany(mappedBy = "alertsTemplateTb")
     @JsonIgnoreProperties(value = { "alertsTemplateTb" }, allowSetters = true)
     private Set<AlertsTb> alertsTbs = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public UUID getId() {
+    public String getId() {
         return this.id;
     }
 
-    public AlertsTemplateTb id(UUID id) {
+    public AlertsTemplateTb id(String id) {
         this.setId(id);
         return this;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

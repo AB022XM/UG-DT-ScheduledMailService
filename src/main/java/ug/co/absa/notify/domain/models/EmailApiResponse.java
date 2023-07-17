@@ -14,6 +14,21 @@ public class EmailApiResponse {
     }
 
 
+    /**
+     * get field
+     *
+     * @return errorMessage
+     */
+    public String getErrorMessage() {
+        return this.errorMessage;
+    }
 
-
+    /**
+     * set field
+     *
+     * @param errorMessage
+     */
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 }

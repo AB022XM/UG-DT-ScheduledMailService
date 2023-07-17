@@ -13,8 +13,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
-
-import jakarta.persistence.EntityManager;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -352,8 +351,7 @@ class AlertsHistoryTbResourceIT {
         int databaseSizeBeforeUpdate = alertsHistoryTbRepository.findAll().size();
 
         // Update the alertsHistoryTb
-        AlertsHistoryTb updatedAlertsHistoryTb = alertsHistoryTbRepository.findById(alertsHistoryTb.getId())
-            .orElseThrow();
+        AlertsHistoryTb updatedAlertsHistoryTb = alertsHistoryTbRepository.findById(alertsHistoryTb.getId()).get();
         // Disconnect from session so that the updates on updatedAlertsHistoryTb are not directly saved in db
         em.detach(updatedAlertsHistoryTb);
         updatedAlertsHistoryTb

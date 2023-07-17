@@ -3,7 +3,7 @@ package ug.co.absa.notify.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.UUID;
+import java.util.Random;
 
 import jakarta.persistence.*;
 
@@ -15,14 +15,18 @@ import jakarta.persistence.*;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class AlertsTb implements Serializable {
 
+    public int gen() {
+        Random r = new Random( System.currentTimeMillis() );
+        return ((1 + r.nextInt(2)) * 10000 + r.nextInt(10000));
+    }
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id", length = 36, unique = true)
-    private UUID id;
 
-    @Column(name = "alert_id")
+    @Column(name = "id")
+    private String id ="ALT-"+ gen()+System.currentTimeMillis();
+
+    @Id
+    @Column(name = "alert_id", unique = true)
     private String alertId;
 
     @Column(name = "alert_tem_id")
@@ -104,16 +108,16 @@ public class AlertsTb implements Serializable {
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public UUID getId() {
+    public String getId() {
         return this.id;
     }
 
-    public AlertsTb id(UUID id) {
+    public AlertsTb id(String id) {
         this.setId(id);
         return this;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -492,4 +496,26 @@ public class AlertsTb implements Serializable {
             ", status='" + getStatus() + "'" +
             "}";
     }
+
+    public AlertsHistoryTb toAlertsHistoryTb(AlertsTb alertTb) {
+       AlertsHistoryTb alertsHistoryTb=  new AlertsHistoryTb();
+         alertsHistoryTb.setHistoryAlertDate(alertTb.getAlertDate());
+         alertsHistoryTb.setHistoryAlertId(alertTb.getAlertId());
+         alertsHistoryTb.setHistoryAlertMessage(alertTb.getAlertMessage());
+         alertsHistoryTb.setHistoryAlertRetries(alertTb.getAlertRetries());
+         alertsHistoryTb.setHistoryAlertStatus(alertTb .getAlertStatus());
+         alertsHistoryTb.setHistoryAlertTimestamp(alertTb.getAlertTimestamp());
+         alertsHistoryTb.setHistoryAlertType(alertTb.getAlertType());
+         alertsHistoryTb.setHistoryAlertPostedDate(alertTb.getAlertPostedDate());
+         alertsHistoryTb.setHistoryAlertInternalErrorcode(alertTb.getAlertInternalErrorcode());
+         alertsHistoryTb.setHistoryAlertPostedBy(alertTb.getAlertPostedBy());
+         alertsHistoryTb.setHistoryAlertPostedDate(alertTb.getAlertPostedDate());
+         alertsHistoryTb.setHistoryAlertRawRequest(alertTb.getRawRequest());
+         alertsHistoryTb.setHistoryAlertRawResponse(alertTb.getRawResponse());
+         alertsHistoryTb.setHistoryAlertRawRequest(alertTb.getRawRequest());
+
+
+
+         return alertsHistoryTb;
+       }
 }

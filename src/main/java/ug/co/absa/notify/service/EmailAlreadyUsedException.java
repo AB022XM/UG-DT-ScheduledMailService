@@ -8,3 +8,5 @@ public class EmailAlreadyUsedException extends RuntimeException {
         super("Email is already in use!");
     }
 }
+
+

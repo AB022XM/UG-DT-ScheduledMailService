@@ -2,9 +2,9 @@ package ug.co.absa.notify.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.MessageSource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -12,13 +12,12 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.spring6.SpringTemplateEngine;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tech.jhipster.config.JHipsterProperties;
-import ug.co.absa.notify.domain.AlertsHistoryTb;
 import ug.co.absa.notify.domain.AlertsTb;
+import ug.co.absa.notify.domain.AlertsTemplateTb;
 import ug.co.absa.notify.domain.User;
 import ug.co.absa.notify.domain.models.*;
 import ug.co.absa.notify.repository.AlertsHistoryTbRepository;
@@ -26,12 +25,15 @@ import ug.co.absa.notify.repository.AlertsTbRepository;
 import ug.co.absa.notify.repository.AlertsTemplateTbRepository;
 import ug.co.absa.notify.repository.ChannelTxnRepository;
 import ug.co.absa.notify.utility.ApiInterface;
+import ug.co.absa.notify.utility.Errors;
 import ug.co.absa.notify.utility.Helpers;
 import ug.co.absa.notify.utility.ServiceGenerator;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 
 @Service
 @Async
@@ -132,25 +134,33 @@ public class MailService {
 
 
 
+    @Async
+   @Scheduled(fixedDelay = 20, initialDelay = 10, timeUnit = TimeUnit.SECONDS)
+    protected void sendEmailScheduled() {
+      AlertsTemplateTb alertsTemplateTb= alertsTemplateTbRepository.findOneByAlertTemplateId("1");
 
 
-    //@Async
-   // @Scheduled(fixedDelay = 10, initialDelay = 5, timeUnit = TimeUnit.SECONDS)
-    public void sendEmailScheduled() {
+
         List<AlertsTb>  alertsTbList= alertsTbRepository.findAll();
         if(!alertsTbList.isEmpty())
         {
 
             alertsTbList.forEach(alertsTb ->{
-                    log.debug(":::::::::::::::::::::SENDING EMAIL:::::::::::::::::::::::\n");
+                    log.debug(":::::::::::::::::::::SENDING EMAIL if email is not null:::::::::::::::::::::::\n");
                     log.debug("CONTENT :  "+alertsTb.toString());
-                    sendoutMail(alertsTb);
-                    try {
-                        Thread.sleep(1000);
+                    if(alertsTb.getAlertFreeField1()!=null)
+                    {
+                        if (alertsTemplateTb != null) {
+                            sendoutMail(alertsTb);
+                        }{
+                            log.debug(":::::::::::ALERTS NOT SENT, ADD A RECORD IN ALERT TEMPLETE:::::::::::::::::::::::\n");
 
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        }
                     }
+
+
+
+
                 }
 
             );
@@ -159,42 +169,137 @@ public class MailService {
         }
     }
 
-    public void sendoutMail(AlertsTb alertsTb)
+    protected void sendoutMail(AlertsTb alertsTb)
     {
-        EmailContent emailContent = Helpers.generateEmailContent(alertsTb);
+        log.debug(":::::::::::::::::::::SENDING EMAIL:::::::::::::::::::::::\n");
         ApiInterface apiInterface = ServiceGenerator.createService(ApiInterface.class);
-
-        Call<EmailApiResponse> call = apiInterface.sendMail(emailContent);
+        EmailContent emailContent = Helpers.generateEmailContent(alertsTb);
+        List<String> emailAddresses = new ArrayList<>();
+        emailAddresses.add(alertsTb.getAlertFreeField1());
+        MailApiRequest mailApiRequest= new MailApiRequest();
+        mailApiRequest.setEmailAddreses(emailAddresses);
+        mailApiRequest.setAttachments(new ArrayList<>());
+        mailApiRequest.setCopyInEmails(new ArrayList<>());
+        mailApiRequest.setEmailContent(emailContent);
+        log.debug("CONTENT SENT OUT TO CUSTOMER: {} ",mailApiRequest.toString());
+        Call<EmailApiResponse> call = apiInterface.sendMail(mailApiRequest);
         call.enqueue(new Callback<EmailApiResponse>() {
             @Override
             public void onResponse(Call<EmailApiResponse> call, Response<EmailApiResponse> response) {
                 log.debug(":::::::::::::::::::::SENT MAIL:::::::::::::::::::::::\n");
                 log.debug("****DETAILS: "+ response.body());
-                try {
-                    Thread.sleep(500);
+                      if(response.body()!=null)
+                      {
 
-                    AlertsHistoryTb.InsertAlertsHistoryTbFromAlertsTbObj( alertsTb, alertsHistoryTbRepository) ;
-                    channelTxnRepository.UPDATE_CHANNEL_TXN_STATUS("3",alertsTb.getAlertId());
+                    if (response.body().getErrorCode()!=null &&
+                        response.body().getErrorCode().equalsIgnoreCase("200"))
+                    {
+                        log.debug(":::::::::::::::::::::sendoutMail:::::::::::::::::::::::\n");
+
+                        channelTxnRepository.UPDATE_CHANNEL_TXN_STATUS("3",alertsTb.getAlertId());
+                       alertsTbRepository.updateAlertStatusByAlertId(String.valueOf(Errors.SUCCESS.getId()), Errors.SUCCESS.getMessage(),alertsTb.getAlertId());
+                    }else
+                    {
+                        alertsTbRepository.updateAlertStatusByAlertId(String.valueOf(Errors.FAILURE.getId()), Errors.FAILED_TO_SEND_MAIL.getMessage(), alertsTb.getAlertId());
+
+                    }
 
 
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
+                      }
 
 
             }
 
-
             @Override
             public void onFailure(Call<EmailApiResponse> call, Throwable throwable) {
                 log.debug(":::::::::::::::::::::SENT MAIL FAILED:::::::::::::::::::::::\n");
+                alertsTbRepository.updateAlertStatusByAlertId(String.valueOf(Errors.UNKNOWN_EXCEPTION_.getId()), Errors.FAILED_TO_SEND_MAIL.getMessage(), alertsTb.getAlertId());
 
             }
         });
 
     }
 
+
+    @Scheduled(fixedDelay = 15, initialDelay = 3, timeUnit = TimeUnit.SECONDS)
+    protected void UpdateEmailsOnAlerts() throws InterruptedException {
+        log.debug(":::::::::::::::::::::runScheduleToUpdateEmails:::::::::::::::::::::::::::");
+        List<AlertsTb> alertsList = alertsTbRepository.findAll();
+        if (alertsList.size() > 0) {
+            for (AlertsTb alertsTb : alertsList) {
+                log.debug("AlertsTb: {} ", alertsTb.toString());
+                if(!alertsTb.getAlertFreeField1().contains("@") || alertsTb.getAlertFreeField1().isEmpty())
+                {
+                    new Thread(() -> {
+                        queryEmailAddress(alertsTb);
+                    }).start();
+                    Thread.sleep(1000);
+                }
+            }
+        } else { log.debug("No Alerts to be created");}
+
+
+    }
+
+
+    private void queryEmailAddress(@NotNull AlertsTb alertsTb) {
+        log.debug("Update all transactions with email address");
+        ApiInterface apiInterface = ServiceGenerator.createService(ApiInterface.class);
+        log.debug("First pick all alerts");
+        AccountRequest accountRequest= new AccountRequest(alertsTb.getAlertFreeField2(),alertsTb.getAlertId());
+        log.debug("****GET EMAIL FOR: "+ accountRequest.accountNumber());
+
+        Call<ValidationResponse> call = apiInterface.getCustomerEmail(accountRequest );
+        call.enqueue(new Callback<ValidationResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<ValidationResponse> call, @NotNull Response<ValidationResponse> response) {
+                ValidationResponse validateResponse = response.body();
+                if (response.isSuccessful()) {
+                    log.debug
+                        ("After picking mail Response: {}", response.body());
+                    if (validateResponse==null ) {
+                        log.debug("No response from  GETEMAIL ");
+
+                        return;
+                    }
+                        if(validateResponse.emailAddress!=null)
+                        {
+                            log.debug("Email found"+ validateResponse.getEmailAddress() );
+                            channelTxnRepository.UPDATE_CHANNEL_TXN_STATUS(String.valueOf(Errors.SUCCESS.getId()),alertsTb.getAlertId());
+                            alertsTb.setAlertFreeField1(alertsTb.getAlertFreeField1());
+                            log.debug("AlertsTb     AFTER MAIL UPDATE: {} ", alertsTb.toString());
+
+                        }else {
+
+                           alertsTb.setStatus(String.valueOf(Errors.WARNING_NO_MAIL_FOUND.getId()));
+                            alertsTb.setAlertFreeField5(Errors.WARNING_NO_MAIL_FOUND.getMessage());
+                        }
+
+                    if((validateResponse.accountName!=null))
+                    {
+                        alertsTbRepository.updateAlertFreeField5ByAlertId(alertsTb.getAlertFreeField3(),
+                            alertsTb.getAlertId());// update name field 5
+                    }
+
+                  //  channelTxnRepository.UPDATE_CHANNEL_TXN_STATUS("",alertsTb.getAlertId());
+
+
+                } else {
+                    log.debug("Response: {}", response.errorBody());
+                }
+            }
+
+
+            @Override
+            public void onFailure(@NotNull Call<ValidationResponse> call, @NotNull Throwable t) {
+                log.error("Error: {}", t.getMessage());
+                alertsTbRepository.updateAlertStatusByAlertId(Errors.FAILED_TO_SEND_MAIL.getMessage(),
+                    "",alertsTb.getAlertId());
+            }
+        });
+
+
+    }
 
 
 

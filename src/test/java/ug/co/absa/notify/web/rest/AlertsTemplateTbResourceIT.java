@@ -10,11 +10,9 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
-
-import jakarta.persistence.EntityManager;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import ug.co.absa.notify.IntegrationTest;
 import ug.co.absa.notify.domain.AlertsTemplateTb;
 import ug.co.absa.notify.repository.AlertsTemplateTbRepository;
@@ -255,7 +254,7 @@ class AlertsTemplateTbResourceIT {
             .andExpect(jsonPath("$.[*].alertTemplatepostedDate").value(hasItem(DEFAULT_ALERT_TEMPLATEPOSTED_DATE)))
             .andExpect(jsonPath("$.[*].alertTmpFreeField1").value(hasItem(DEFAULT_ALERT_TMP_FREE_FIELD_1.toString())))
             .andExpect(jsonPath("$.[*].alertTmpFreeField2ContentType").value(hasItem(DEFAULT_ALERT_TMP_FREE_FIELD_2_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].alertTmpFreeField2").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_ALERT_TMP_FREE_FIELD_2))))
+            .andExpect(jsonPath("$.[*].alertTmpFreeField2").value(hasItem(Base64Utils.encodeToString(DEFAULT_ALERT_TMP_FREE_FIELD_2))))
             .andExpect(jsonPath("$.[*].alertTmpFreeField3").value(hasItem(DEFAULT_ALERT_TMP_FREE_FIELD_3)))
             .andExpect(jsonPath("$.[*].alertTmpFreeField4").value(hasItem(DEFAULT_ALERT_TMP_FREE_FIELD_4)))
             .andExpect(jsonPath("$.[*].alertTmpFreeField5").value(hasItem(DEFAULT_ALERT_TMP_FREE_FIELD_5)))
@@ -289,8 +288,7 @@ class AlertsTemplateTbResourceIT {
             .andExpect(jsonPath("$.alertTemplatepostedDate").value(DEFAULT_ALERT_TEMPLATEPOSTED_DATE))
             .andExpect(jsonPath("$.alertTmpFreeField1").value(DEFAULT_ALERT_TMP_FREE_FIELD_1.toString()))
             .andExpect(jsonPath("$.alertTmpFreeField2ContentType").value(DEFAULT_ALERT_TMP_FREE_FIELD_2_CONTENT_TYPE))
-            .andExpect(jsonPath("$.alertTmpFreeField2").value((Base64.getEncoder().
-                encodeToString(DEFAULT_ALERT_TMP_FREE_FIELD_2))))
+            .andExpect(jsonPath("$.alertTmpFreeField2").value(Base64Utils.encodeToString(DEFAULT_ALERT_TMP_FREE_FIELD_2)))
             .andExpect(jsonPath("$.alertTmpFreeField3").value(DEFAULT_ALERT_TMP_FREE_FIELD_3))
             .andExpect(jsonPath("$.alertTmpFreeField4").value(DEFAULT_ALERT_TMP_FREE_FIELD_4))
             .andExpect(jsonPath("$.alertTmpFreeField5").value(DEFAULT_ALERT_TMP_FREE_FIELD_5))
@@ -317,7 +315,7 @@ class AlertsTemplateTbResourceIT {
         int databaseSizeBeforeUpdate = alertsTemplateTbRepository.findAll().size();
 
         // Update the alertsTemplateTb
-        AlertsTemplateTb updatedAlertsTemplateTb = alertsTemplateTbRepository.findById(alertsTemplateTb.getId()).orElseThrow();
+        AlertsTemplateTb updatedAlertsTemplateTb = alertsTemplateTbRepository.findById(alertsTemplateTb.getId()).get();
         // Disconnect from session so that the updates on updatedAlertsTemplateTb are not directly saved in db
         em.detach(updatedAlertsTemplateTb);
         updatedAlertsTemplateTb

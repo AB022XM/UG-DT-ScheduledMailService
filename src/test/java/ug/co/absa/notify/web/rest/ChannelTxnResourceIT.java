@@ -8,8 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
-
-import jakarta.persistence.EntityManager;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -303,7 +302,7 @@ class ChannelTxnResourceIT {
         int databaseSizeBeforeUpdate = channelTxnRepository.findAll().size();
 
         // Update the channelTxn
-        ChannelTxn updatedChannelTxn = channelTxnRepository.findById(channelTxn.getId()).orElseThrow();
+        ChannelTxn updatedChannelTxn = channelTxnRepository.findById(channelTxn.getId()).get();
         // Disconnect from session so that the updates on updatedChannelTxn are not directly saved in db
         em.detach(updatedChannelTxn);
         updatedChannelTxn

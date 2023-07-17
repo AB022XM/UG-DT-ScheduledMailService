@@ -10,4 +10,6 @@ import ug.co.absa.notify.domain.AlertsTemplateTb;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface AlertsTemplateTbRepository extends JpaRepository<AlertsTemplateTb, UUID> {}
+public interface AlertsTemplateTbRepository extends JpaRepository<AlertsTemplateTb, UUID> {
+    AlertsTemplateTb findOneByAlertTemplateId(String number);
+}

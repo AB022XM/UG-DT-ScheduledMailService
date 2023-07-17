@@ -11,11 +11,235 @@
     <property name="datetimeType" value="datetime(6)" dbms="mysql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230715183118_added_entity_ChannelTxn.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230715183119_added_entity_AlertsTb.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230715183120_added_entity_AlertsTemplateTb.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230715183121_added_entity_AlertsHistoryTb.xml"
+             relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230715183118_added_entity_ChannelTxn.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230715183119_added_entity_AlertsTb.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230715183120_added_entity_AlertsTemplateTb.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230715183121_added_entity_AlertsHistoryTb.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230717203405_added_entity_SchedulerSettings.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20230715183119_added_entity_constraints_AlertsTb.xml"
+             relativeToChangelogFile="false"/>
+    <changeSet id="1689503028613-1" author="AB022XM (generated)" context="faker" labels="example-label">
+        <createTable tableName="alerts_history_tb">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_alerts_history_tb"/>
+            </column>
+            <column name="history_alert_id" type="VARCHAR(255)"/>
+            <column name="history_alert_tem_id" type="VARCHAR(255)"/>
+            <column name="history_alert_type" type="VARCHAR(255)"/>
+            <column name="history_alert_status" type="VARCHAR(255)"/>
+            <column name="history_alert_message" type="VARCHAR(255)"/>
+            <column name="history_alert_date" type="DATETIME"/>
+            <column name="history_alert_retries" type="INT"/>
+            <column name="history_alert_timestamp" type="DATETIME"/>
+            <column name="history_alert_posted_by" type="VARCHAR(255)"/>
+            <column name="history_alert_posted_date" type="VARCHAR(255)"/>
+            <column name="history_alert_internal_errorcode" type="VARCHAR(255)"/>
+            <column name="history_alert_raw_request" type="CLOB"/>
+            <column name="history_alert_raw_response" type="CLOB"/>
+            <column name="history_alert_free_field_1" type="CLOB"/>
+            <column name="history_alert_free_field_2" type="CLOB"/>
+            <column name="history_alert_free_field_3" type="VARCHAR(255)"/>
+            <column name="history_alert_free_field_4" type="VARCHAR(255)"/>
+            <column name="history_alert_free_field_5" type="VARCHAR(255)"/>
+            <column name="history_alert_free_field_6" type="VARCHAR(255)"/>
+            <column name="history_alert_free_field_7" type="VARCHAR(255)"/>
+            <column name="history_alert_free_field_8" type="VARCHAR(255)"/>
+            <column name="created_at" type="DATETIME"/>
+            <column name="updated_at" type="DATETIME"/>
+            <column name="history_status" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1689503028613-2" author="AB022XM (generated)">
+        <createTable tableName="alerts_tb">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_alerts_tb"/>
+            </column>
+            <column name="alert_id" type="VARCHAR(50)"/>
+            <column name="alert_tem_id" type="VARCHAR(255)"/>
+            <column name="alert_type" type="VARCHAR(255)"/>
+            <column name="alert_status" type="VARCHAR(255)"/>
+            <column name="alert_message" type="VARCHAR(255)"/>
+            <column name="alert_date" type="DATETIME"/>
+            <column name="alert_retries" type="INT"/>
+            <column name="alert_timestamp" type="DATETIME"/>
+            <column name="alert_posted_by" type="VARCHAR(255)"/>
+            <column name="alert_posted_date" type="VARCHAR(255)"/>
+            <column name="alert_internal_errorcode" type="VARCHAR(255)"/>
+            <column name="raw_request" type="CLOB"/>
+            <column name="raw_response" type="CLOB"/>
+            <column name="alert_free_field_1" type="CLOB"/>
+            <column name="alert_free_field_2" type="CLOB"/>
+            <column name="alert_free_field_3" type="VARCHAR(255)"/>
+            <column name="alert_free_field_4" type="VARCHAR(255)"/>
+            <column name="alert_free_field_5" type="VARCHAR(255)"/>
+            <column name="alert_free_field_6" type="VARCHAR(255)"/>
+            <column name="alert_free_field_7" type="VARCHAR(255)"/>
+            <column name="alert_free_field_8" type="VARCHAR(255)"/>
+            <column name="created_at" type="DATETIME"/>
+            <column name="updated_at" type="DATETIME"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="alerts_template_tb_id" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1689503028613-3" author="AB022XM (generated)">
+        <createTable tableName="alerts_template_tb">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_alerts_template_tb"/>
+            </column>
+            <column name="alert_template_id" type="VARCHAR(255)"/>
+            <column name="alertroduct_id" type="VARCHAR(255)"/>
+            <column name="alert_templatename" type="VARCHAR(255)"/>
+            <column name="alert_template_details" type="CLOB"/>
+            <column name="alert_template_status" type="VARCHAR(255)"/>
+            <column name="alert_templateretries" type="INT"/>
+            <column name="alert_template_timestamp" type="DATETIME"/>
+            <column name="alert_templatepostedby" type="VARCHAR(255)"/>
+            <column name="alert_templateposted_date" type="VARCHAR(255)"/>
+            <column name="alert_tmp_free_field_1" type="CLOB"/>
+            <column name="alert_tmp_free_field_2" type="BLOB"/>
+            <column name="alert_tmp_free_field_2_content_type" type="VARCHAR(255)"/>
+            <column name="alert_tmp_free_field_3" type="VARCHAR(255)"/>
+            <column name="alert_tmp_free_field_4" type="VARCHAR(255)"/>
+            <column name="alert_tmp_free_field_5" type="VARCHAR(255)"/>
+            <column name="alert_tmp_free_field_6" type="VARCHAR(255)"/>
+            <column name="alert_tmp_free_field_7" type="VARCHAR(255)"/>
+            <column name="alert_tmp_free_field_8" type="VARCHAR(255)"/>
+            <column name="timestamp" type="DATETIME"/>
+            <column name="is_active" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1689503028613-4" author="AB022XM (generated)">
+        <createTable tableName="alerts_template_tb_alerts_tbs">
+            <column name="alerts_template_tb_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_alerts_template_tb_alertstbs"/>
+            </column>
+            <column name="alerts_tbs_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_alerts_template_tb_alertstbs"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1689503028613-5" author="AB022XM (generated)">
+        <createTable tableName="channel_txns">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_channel_txns"/>
+            </column>
+            <column name="account_no" type="VARCHAR(255)"/>
+            <column name="txn_date" type="VARCHAR(255)"/>
+            <column name="narrative" type="VARCHAR(255)"/>
+            <column name="amount" type="VARCHAR(255)"/>
+            <column name="txnid" type="VARCHAR(255)"/>
+            <column name="utilityref" type="VARCHAR(255)"/>
+            <column name="transaction_id" type="VARCHAR(255)"/>
+            <column name="mno" type="VARCHAR(255)"/>
+            <column name="txn_type" type="VARCHAR(255)"/>
+            <column name="txn_status" type="VARCHAR(255)"/>
+            <column name="mno_txn_id" type="VARCHAR(255)"/>
+            <column name="message" type="VARCHAR(255)"/>
+            <column name="notified_status" type="VARCHAR(255)"/>
+            <column name="date_inserted" type="VARCHAR(255)"/>
+            <column name="record_id" type="VARCHAR(255)"/>
+            <column name="final_status" type="VARCHAR(255)"/>
+            <column name="settlement_date" type="VARCHAR(255)"/>
+            <column name="source_account" type="VARCHAR(255)"/>
+            <column name="paymentcompleted_date" type="VARCHAR(255)"/>
+            <column name="responsexml" type="VARCHAR(255)"/>
+            <column name="requestxml" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1689503028613-6" author="AB022XM (generated)">
+        <createTable tableName="jhi_authority">
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_jhi_authority"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1689503028613-7" author="AB022XM (generated)">
+        <createTable tableName="jhi_user">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_jhi_user"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="DATETIME"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="DATETIME"/>
+            <column name="login" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(50)"/>
+            <column name="last_name" type="VARCHAR(50)"/>
+            <column name="email" type="VARCHAR(254)"/>
+            <column name="activated" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lang_key" type="VARCHAR(10)"/>
+            <column name="image_url" type="VARCHAR(256)"/>
+            <column name="activation_key" type="VARCHAR(20)"/>
+            <column name="reset_key" type="VARCHAR(20)"/>
+            <column name="reset_date" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1689503028613-8" author="AB022XM (generated)">
+        <createTable tableName="jhi_user_authority">
+            <column name="authority_name" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_jhi_user_authority"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_jhi_user_authority"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1689503028613-9" author="AB022XM (generated)">
+        <addUniqueConstraint columnNames="alert_id" constraintName="uc_alerts_tb_alert" tableName="alerts_tb"/>
+    </changeSet>
+    <changeSet id="1689503028613-10" author="AB022XM (generated)">
+        <addUniqueConstraint columnNames="alerts_tbs_id" constraintName="uc_alerts_template_tb_alerts_tbs_alertstbs"
+                             tableName="alerts_template_tb_alerts_tbs"/>
+    </changeSet>
+    <changeSet id="1689503028613-11" author="AB022XM (generated)">
+        <addUniqueConstraint columnNames="email" constraintName="uc_jhi_user_email" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet id="1689503028613-12" author="AB022XM (generated)">
+        <addUniqueConstraint columnNames="login" constraintName="uc_jhi_user_login" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet id="1689503028613-13" author="AB022XM (generated)">
+        <addForeignKeyConstraint baseColumnNames="alerts_template_tb_id" baseTableName="alerts_tb"
+                                 constraintName="FK_ALERTS_TB_ON_ALERTSTEMPLATETB" referencedColumnNames="id"
+                                 referencedTableName="alerts_template_tb"/>
+    </changeSet>
+    <changeSet id="1689503028613-14" author="AB022XM (generated)">
+        <addForeignKeyConstraint baseColumnNames="alerts_tbs_id" baseTableName="alerts_template_tb_alerts_tbs"
+                                 constraintName="fk_aletemtbaletbs_on_alerts_tb" referencedColumnNames="id"
+                                 referencedTableName="alerts_tb"/>
+    </changeSet>
+    <changeSet id="1689503028613-15" author="AB022XM (generated)">
+        <addForeignKeyConstraint baseColumnNames="alerts_template_tb_id" baseTableName="alerts_template_tb_alerts_tbs"
+                                 constraintName="fk_aletemtbaletbs_on_alerts_template_tb" referencedColumnNames="id"
+                                 referencedTableName="alerts_template_tb"/>
+    </changeSet>
+    <changeSet id="1689503028613-16" author="AB022XM (generated)">
+        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="jhi_user_authority"
+                                 constraintName="fk_jhiuseaut_on_authority" referencedColumnNames="name"
+                                 referencedTableName="jhi_authority"/>
+    </changeSet>
+    <changeSet id="1689503028613-17" author="AB022XM (generated)">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_authority"
+                                 constraintName="fk_jhiuseaut_on_user" referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+    </changeSet>
     <include file="config/liquibase/changelog/20230715183119_added_entity_constraints_AlertsTb.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->

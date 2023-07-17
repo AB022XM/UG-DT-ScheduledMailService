@@ -1,7 +1,6 @@
 package ug.co.absa.notify.repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.lang.Nullable;
@@ -18,10 +17,23 @@ public interface AlertsTbRepository extends JpaRepository<AlertsTb, UUID> {
 
     @Transactional
     @Modifying
-    @Query("update AlertsTb a set a.alertFreeField1 = ?1 where a.alertFreeField8 = ?2")
-    int updateAlertFreeField1(@Nullable String alertFreeField1, String alertFreeField11);
+    @Query("update AlertsTb a set a.alertStatus = ?1, a.alertStatus = ?2  where a.alertId = ?3")
+    int updateAlertStatusByAlertId(String alertStatus,String alertFreeField5, String alertId);
+    @Transactional
+    @Modifying
+    @Query("update AlertsTb a set a.alertFreeField1 = ?1 where a.alertId = ?2")
+    int updateAlertFreeField1ByAlertId(String alertFreeField1, String alertId);
+
+    @Transactional
+    @Modifying
+    @Query("update AlertsTb a set a.alertFreeField5 = ?1 where a.alertId = ?2")
+    int updateAlertFreeField5ByAlertId(String customerName, String alertId);
+
+
     @Nullable
     @Query("select a from AlertsTb a where upper(a.status) = upper(?1) order by a.alertTimestamp DESC, a.alertRetries")
-    Optional<List<AlertsTb>> findAllPendingAlertsTb(String status);
-    AlertsTb findOneById(UUID uuid);
+    List<AlertsTb> findAllPendingAlertsTb(String status);
+    AlertsTb findOneById(String alertId);
+
+
 }

@@ -121,6 +121,8 @@ public class AlertsHistoryTb implements Serializable {
         return this;
     }
 
+
+
     public void setHistoryAlertId(String historyAlertId) {
         this.historyAlertId = historyAlertId;
     }

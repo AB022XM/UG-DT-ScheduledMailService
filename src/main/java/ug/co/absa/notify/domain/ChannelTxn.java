@@ -2,22 +2,15 @@ package ug.co.absa.notify.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import org.hibernate.annotations.CurrentTimestamp;
-import org.springframework.data.auditing.CurrentDateTimeProvider;
-import ug.co.absa.notify.utility.Helpers;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-
-import static ug.co.absa.notify.domain.AlertsTb_.ALERT_STATUS;
-
 
 /**
  * A ChannelTxn.
  */
 @Entity
-@Table(name = "channel_txn")
+@Table(name = "channel_txns")
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class ChannelTxn implements Serializable {
 
@@ -25,260 +18,365 @@ public class ChannelTxn implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "ID")
     private Long id;
 
     @Column(name = "account_no")
     private String accountNo;
 
-    @Column(name = "txn_date")
+    @Column(name = "Txn_date")
     private String txnDate;
 
-    @Column(name = "narrative")
+    @Column(name = "Narrative")
     private String narrative;
 
     @Column(name = "amount")
     private String amount;
 
+
     @Size(min = 2)
-    @Column(name = "txn_id")
+    @Column(name = "txnID")
     private String txnID;
 
-    @Column(name = "utility_ref")
+    @Column(name = "utilityref")
     private String utilityRef;
 
     @Column(name = "transaction_id")
     private String transactionID;
 
-    @Column(name = "m_no")
+    @Column(name = "MNO")
     private String mNO;
 
-    @Column(name = "txn_type")
+    @Column(name = "Txn_type")
     private String txnType;
 
-    @Column(name = "txn_status_mno")
+    @Column(name = "txn_status")
     private String txnStatusMno;
 
-    @Column(name = "m_n_txn_id")
+    @Column(name = "MNO_txn_ID")
     private String mNTxnID;
 
-    @Column(name = "message")
+    @Column(name = "Message")
     private String message;
 
-    @Column(name = "notified_status")
+    @Column(name = "Notified_status")
     private String notifiedStatus;
 
     @Column(name = "date_inserted")
     private String dateInserted;
 
-    @Column(name = "record_id")
+    @Column(name = "RecordId")
     private String recordId;
 
     @Column(name = "final_status")
     private String finalStatus;
 
-    @Column(name = "settlement_date")
+    @Column(name = "settlement_Date")
     private String settlementDate;
 
-    @Column(name = "request_xml")
-    private String requestXml;
+    @Column(name = "Source_Account")
+    private String Source_Account;
 
-    @Column(name = "response_xml")
-    private String responseXml;
+    @Column(name = "paymentcompleteddate",nullable = true)
+    private String paymentcompleteddate;
+    @Column(name = "responsexml")
+    private String responsexml;
+
+    @Column(name = "requestxml")
+    private String requestxml;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
     public Long getId() {
         return this.id;
-    }
-
-    public ChannelTxn id(Long id) {
-        this.setId(id);
-        return this;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * get field @Column(name = "account_no")
+     *
+     * @return accountNo @Column(name = "account_no")
+
+     */
     public String getAccountNo() {
         return this.accountNo;
     }
 
-    public ChannelTxn accountNo(String accountNo) {
-        this.setAccountNo(accountNo);
-        return this;
-    }
+    /**
+     * set field @Column(name = "account_no")
+     *
+     * @param  @Column(name = "account_no")
 
     public void setAccountNo(String accountNo) {
         this.accountNo = accountNo;
     }
 
+    /**
+     * get field @Column(name = "Txn_date")
+     *
+     * @return txnDate @Column(name = "Txn_date")
+
+     */
     public String getTxnDate() {
         return this.txnDate;
     }
 
-    public ChannelTxn txnDate(String txnDate) {
-        this.setTxnDate(txnDate);
-        return this;
-    }
+    /**
+     * set field @Column(name = "Txn_date")
+     *
+     * @param  @Column(name = "Txn_date")
 
     public void setTxnDate(String txnDate) {
         this.txnDate = txnDate;
     }
 
+    /**
+     * get field @Column(name = "Narrative")
+     *
+     * @return narrative @Column(name = "Narrative")
+
+     */
     public String getNarrative() {
         return this.narrative;
     }
 
-    public ChannelTxn narrative(String narrative) {
-        this.setNarrative(narrative);
-        return this;
-    }
+    /**
+     * set field @Column(name = "Narrative")
+     *
+     * @param narrative @Column(name = "Narrative")
 
+     */
     public void setNarrative(String narrative) {
         this.narrative = narrative;
     }
 
+    /**
+     * get field @Column(name = "amount")
+     *
+     * @return amount @Column(name = "amount")
+
+     */
     public String getAmount() {
         return this.amount;
     }
 
-    public ChannelTxn amount(String amount) {
-        this.setAmount(amount);
-        return this;
-    }
+    /**
+     * set field @Column(name = "amount")
+     *
+     * @param amount @Column(name = "amount")
 
+     */
     public void setAmount(String amount) {
         this.amount = amount;
     }
 
+    /**
+     * get field @Size(min = 2)
+     @Column(name = "txnID")
+
+      *
+      * @return txnID @Size(min = 2)
+     @Column(name = "txnID")
+
+     */
     public String getTxnID() {
         return this.txnID;
     }
 
-    public ChannelTxn txnID(String txnID) {
-        this.setTxnID(txnID);
-        return this;
-    }
+    /**
+     * set field @Size(min = 2)
+     @Column(name = "txnID")
 
+      *
+      * @param txnID @Size(min = 2)
+     @Column(name = "txnID")
+
+     */
     public void setTxnID(String txnID) {
         this.txnID = txnID;
     }
 
+    /**
+     * get field @Column(name = "utilityref")
+     *
+     * @return utilityRef @Column(name = "utilityref")
+
+     */
     public String getUtilityRef() {
         return this.utilityRef;
     }
 
-    public ChannelTxn utilityRef(String utilityRef) {
-        this.setUtilityRef(utilityRef);
-        return this;
-    }
+    /**
+     * set field @Column(name = "utilityref")
+     *
+     * @param utilityRef @Column(name = "utilityref")
 
+     */
     public void setUtilityRef(String utilityRef) {
         this.utilityRef = utilityRef;
     }
 
+    /**
+     * get field @Column(name = "transaction_id")
+     *
+     * @return transactionID @Column(name = "transaction_id")
+
+     */
     public String getTransactionID() {
         return this.transactionID;
     }
 
-    public ChannelTxn transactionID(String transactionID) {
-        this.setTransactionID(transactionID);
-        return this;
-    }
+    /**
+     * set field @Column(name = "transaction_id")
+     *
+     * @param transactionID @Column(name = "transaction_id")
 
+     */
     public void setTransactionID(String transactionID) {
         this.transactionID = transactionID;
     }
 
-    public String getmNO() {
+    /**
+     * get field @Column(name = "MNO")
+     *
+     * @return mNO @Column(name = "MNO")
+
+     */
+    public String getMNO() {
         return this.mNO;
     }
 
-    public ChannelTxn mNO(String mNO) {
-        this.setmNO(mNO);
-        return this;
-    }
+    /**
+     * set field @Column(name = "MNO")
+     *
+     * @param mNO @Column(name = "MNO")
 
-    public void setmNO(String mNO) {
+     */
+    public void setMNO(String mNO) {
         this.mNO = mNO;
     }
 
+    /**
+     * get field @Column(name = "Txn_type")
+     *
+     * @return txnType @Column(name = "Txn_type")
+
+     */
     public String getTxnType() {
         return this.txnType;
     }
 
-    public ChannelTxn txnType(String txnType) {
-        this.setTxnType(txnType);
-        return this;
-    }
+    /**
+     * set field @Column(name = "Txn_type")
+     *
+     * @param txnType @Column(name = "Txn_type")
 
+     */
     public void setTxnType(String txnType) {
         this.txnType = txnType;
     }
 
+    /**
+     * get field @Column(name = "txn_status")
+     *
+     * @return txnStatusMno @Column(name = "txn_status")
+
+     */
     public String getTxnStatusMno() {
         return this.txnStatusMno;
     }
 
-    public ChannelTxn txnStatusMno(String txnStatusMno) {
-        this.setTxnStatusMno(txnStatusMno);
-        return this;
-    }
+    /**
+     * set field @Column(name = "txn_status")
+     *
+     * @param txnStatusMno @Column(name = "txn_status")
 
+     */
     public void setTxnStatusMno(String txnStatusMno) {
         this.txnStatusMno = txnStatusMno;
     }
 
-    public String getmNTxnID() {
+    /**
+     * get field @Column(name = "MNO_txn_ID")
+     *
+     * @return mNTxnID @Column(name = "MNO_txn_ID")
+
+     */
+    public String getMNTxnID() {
         return this.mNTxnID;
     }
 
-    public ChannelTxn mNTxnID(String mNTxnID) {
-        this.setmNTxnID(mNTxnID);
-        return this;
-    }
+    /**
+     * set field @Column(name = "MNO_txn_ID")
+     *
+     * @param mNTxnID @Column(name = "MNO_txn_ID")
 
-    public void setmNTxnID(String mNTxnID) {
+     */
+    public void setMNTxnID(String mNTxnID) {
         this.mNTxnID = mNTxnID;
     }
 
+    /**
+     * get field @Column(name = "Message")
+     *
+     * @return message @Column(name = "Message")
+
+     */
     public String getMessage() {
         return this.message;
     }
 
-    public ChannelTxn message(String message) {
-        this.setMessage(message);
-        return this;
-    }
+    /**
+     * set field @Column(name = "Message")
+     *
+     * @param message @Column(name = "Message")
 
+     */
     public void setMessage(String message) {
         this.message = message;
     }
 
+    /**
+     * get field @Column(name = "Notified_status")
+     *
+     * @return notifiedStatus @Column(name = "Notified_status")
+
+     */
     public String getNotifiedStatus() {
         return this.notifiedStatus;
     }
 
-    public ChannelTxn notifiedStatus(String notifiedStatus) {
-        this.setNotifiedStatus(notifiedStatus);
-        return this;
-    }
+    /**
+     * set field @Column(name = "Notified_status")
+     *
+     * @param notifiedStatus @Column(name = "Notified_status")
 
+     */
     public void setNotifiedStatus(String notifiedStatus) {
         this.notifiedStatus = notifiedStatus;
     }
 
+    /**
+     * get field @Column(name = "date_inserted")
+     *
+     * @return dateInserted @Column(name = "date_inserted")
+
+     */
     public String getDateInserted() {
         return this.dateInserted;
     }
 
-    public ChannelTxn dateInserted(String dateInserted) {
-        this.setDateInserted(dateInserted);
-        return this;
-    }
+    /**
+     * set field @Column(name = "date_inserted")
+     *
+     * @param dateInserted @Column(name = "date_inserted")
 
+     */
     public void setDateInserted(String dateInserted) {
         this.dateInserted = dateInserted;
     }
@@ -296,56 +394,106 @@ public class ChannelTxn implements Serializable {
         this.recordId = recordId;
     }
 
+    /**
+     * get field @Column(name = "final_status")
+     *
+     * @return finalStatus @Column(name = "final_status")
+
+     */
     public String getFinalStatus() {
         return this.finalStatus;
     }
 
-    public ChannelTxn finalStatus(String finalStatus) {
-        this.setFinalStatus(finalStatus);
-        return this;
-    }
+    /**
+     * set field @Column(name = "final_status")
+     *
+     * @param finalStatus @Column(name = "final_status")
 
+     */
     public void setFinalStatus(String finalStatus) {
         this.finalStatus = finalStatus;
     }
 
+    /**
+     * get field @Column(name = "settlement_Date")
+     *
+     * @return settlementDate @Column(name = "settlement_Date")
+
+     */
     public String getSettlementDate() {
         return this.settlementDate;
     }
 
-    public ChannelTxn settlementDate(String settlementDate) {
-        this.setSettlementDate(settlementDate);
-        return this;
-    }
+    /**
+     * set field @Column(name = "settlement_Date")
+     *
+     * @param settlementDate @Column(name = "settlement_Date")
 
+     */
     public void setSettlementDate(String settlementDate) {
         this.settlementDate = settlementDate;
     }
 
-    public String getRequestXml() {
-        return this.requestXml;
+    /**
+     * get field @Column(name = "Source_Account")
+     *
+     * @return Source_Account @Column(name = "Source_Account")
+
+     */
+    public String getSource_Account() {
+        return this.Source_Account;
     }
 
-    public ChannelTxn requestXml(String requestXml) {
-        this.setRequestXml(requestXml);
-        return this;
+    /**
+     * set field @Column(name = "Source_Account")
+     *
+     * @param Source_Account @Column(name = "Source_Account")
+
+     */
+    public void setSource_Account(String Source_Account) {
+        this.Source_Account = Source_Account;
     }
 
-    public void setRequestXml(String requestXml) {
-        this.requestXml = requestXml;
+
+    /**
+     * get field @Column(name = "responsexml")
+     *
+     * @return responsexml @Column(name = "responsexml")
+
+     */
+    public String getResponsexml() {
+        return this.responsexml;
     }
 
-    public String getResponseXml() {
-        return this.responseXml;
+    /**
+     * set field @Column(name = "responsexml")
+     *
+     * @param responsexml @Column(name = "responsexml")
+
+     */
+    public void setResponsexml(String responsexml) {
+        this.responsexml = responsexml;
     }
 
-    public ChannelTxn responseXml(String responseXml) {
-        this.setResponseXml(responseXml);
-        return this;
+
+    /**
+     * get field @Column(name = "requestxml")
+     *
+     * @return requestxml @Column(name = "requestxml")
+
+     */
+    public String getRequestxml() {
+        return this.requestxml;
     }
 
-    public void setResponseXml(String responseXml) {
-        this.responseXml = responseXml;
+    /**
+     * set field @Column(name = "requestxml")
+     *
+     * @param requestxml @Column(name = "requestxml")
+
+     */
+    public void setRequestxml(String requestxml) {
+        this.requestxml = requestxml;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -379,25 +527,23 @@ public class ChannelTxn implements Serializable {
             ", txnID='" + getTxnID() + "'" +
             ", utilityRef='" + getUtilityRef() + "'" +
             ", transactionID='" + getTransactionID() + "'" +
-            ", mNO='" + getmNO() + "'" +
+            ", mNO='" + getMNO() + "'" +
             ", txnType='" + getTxnType() + "'" +
             ", txnStatusMno='" + getTxnStatusMno() + "'" +
-            ", mNTxnID='" + getmNTxnID() + "'" +
+            ", mNTxnID='" +getMNTxnID() + "'" +
             ", message='" + getMessage() + "'" +
             ", notifiedStatus='" + getNotifiedStatus() + "'" +
             ", dateInserted='" + getDateInserted() + "'" +
             ", recordId='" + getRecordId() + "'" +
             ", finalStatus='" + getFinalStatus() + "'" +
             ", settlementDate='" + getSettlementDate() + "'" +
-            ", requestXml='" + getRequestXml() + "'" +
-            ", responseXml='" + getResponseXml() + "'" +
+            ", requestXml='" +getResponsexml() + "'" +
+            ", responseXml='" + getResponsexml() + "'" +
             "}";
     }
 
     public static  AlertsTb ToAlertsTb(ChannelTxn channelTxn) {
-        String message= Helpers.createEmailBody(channelTxn);
         AlertsTb alertsTb = new AlertsTb();
-
         alertsTb.setAlertId("UMEME-MAIL-"+channelTxn.getTxnID());
         alertsTb.setStatus("PENDING");
         alertsTb.alertDate(ZonedDateTime.now());
@@ -406,8 +552,8 @@ public class ChannelTxn implements Serializable {
         alertsTb.createdAt(ZonedDateTime.now());
 
         alertsTb.alertTimestamp (ZonedDateTime.now());
-        alertsTb.setAlertMessage(message);
-        alertsTb.setAlertFreeField1("Waiting for email to be updated ");
+        alertsTb.setAlertMessage("");
+        alertsTb.setAlertFreeField1("EMAIL");
         alertsTb.setAlertFreeField2(channelTxn.getAccountNo());
         alertsTb.setAlertFreeField3(channelTxn.getRecordId());
         alertsTb.setAlertFreeField4(channelTxn.getNarrative() );
@@ -416,6 +562,5 @@ public class ChannelTxn implements Serializable {
 
         return alertsTb;
     }
-
 
 }

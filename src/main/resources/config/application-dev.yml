@@ -29,9 +29,9 @@ spring:
     serialization:
       indent-output: true
   datasource:
-      url: jdbc:mysql://localhost:3306/ScheduledMailService?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-      username: root
-      password:
+      url: jdbc:mysql://UGUKKAMAPP0001.corp.dsarena.com:3306/customers?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+      username: cerve
+      password: Licia122008Be
       driver-class-name: com.mysql.cj.jdbc.Driver
       # This is the database table to use for the connection
       # This is the username

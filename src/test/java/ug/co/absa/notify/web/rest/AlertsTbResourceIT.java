@@ -12,8 +12,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
-
-import jakarta.persistence.EntityManager;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -344,7 +343,7 @@ class AlertsTbResourceIT {
         int databaseSizeBeforeUpdate = alertsTbRepository.findAll().size();
 
         // Update the alertsTb
-        AlertsTb updatedAlertsTb = alertsTbRepository.findById(alertsTb.getId()).orElseThrow();
+        AlertsTb updatedAlertsTb = alertsTbRepository.findById(alertsTb.getId()).get();
         // Disconnect from session so that the updates on updatedAlertsTb are not directly saved in db
         em.detach(updatedAlertsTb);
         updatedAlertsTb

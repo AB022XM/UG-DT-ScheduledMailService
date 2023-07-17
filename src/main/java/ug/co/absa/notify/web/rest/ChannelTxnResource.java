@@ -5,9 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -106,93 +104,7 @@ public class ChannelTxnResource {
      * or with status {@code 500 (Internal Server Error)} if the channelTxn couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/channel-txns/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<ChannelTxn> partialUpdateChannelTxn(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody ChannelTxn channelTxn
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update ChannelTxn partially : {}, {}", id, channelTxn);
-        if (channelTxn.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, channelTxn.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!channelTxnRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<ChannelTxn> result = channelTxnRepository
-            .findById(channelTxn.getId())
-            .map(existingChannelTxn -> {
-                if (channelTxn.getAccountNo() != null) {
-                    existingChannelTxn.setAccountNo(channelTxn.getAccountNo());
-                }
-                if (channelTxn.getTxnDate() != null) {
-                    existingChannelTxn.setTxnDate(channelTxn.getTxnDate());
-                }
-                if (channelTxn.getNarrative() != null) {
-                    existingChannelTxn.setNarrative(channelTxn.getNarrative());
-                }
-                if (channelTxn.getAmount() != null) {
-                    existingChannelTxn.setAmount(channelTxn.getAmount());
-                }
-                if (channelTxn.getTxnID() != null) {
-                    existingChannelTxn.setTxnID(channelTxn.getTxnID());
-                }
-                if (channelTxn.getUtilityRef() != null) {
-                    existingChannelTxn.setUtilityRef(channelTxn.getUtilityRef());
-                }
-                if (channelTxn.getTransactionID() != null) {
-                    existingChannelTxn.setTransactionID(channelTxn.getTransactionID());
-                }
-                if (channelTxn.getmNO() != null) {
-                    existingChannelTxn.setmNO(channelTxn.getmNO());
-                }
-                if (channelTxn.getTxnType() != null) {
-                    existingChannelTxn.setTxnType(channelTxn.getTxnType());
-                }
-                if (channelTxn.getTxnStatusMno() != null) {
-                    existingChannelTxn.setTxnStatusMno(channelTxn.getTxnStatusMno());
-                }
-                if (channelTxn.getmNTxnID() != null) {
-                    existingChannelTxn.setmNTxnID(channelTxn.getmNTxnID());
-                }
-                if (channelTxn.getMessage() != null) {
-                    existingChannelTxn.setMessage(channelTxn.getMessage());
-                }
-                if (channelTxn.getNotifiedStatus() != null) {
-                    existingChannelTxn.setNotifiedStatus(channelTxn.getNotifiedStatus());
-                }
-                if (channelTxn.getDateInserted() != null) {
-                    existingChannelTxn.setDateInserted(channelTxn.getDateInserted());
-                }
-                if (channelTxn.getRecordId() != null) {
-                    existingChannelTxn.setRecordId(channelTxn.getRecordId());
-                }
-                if (channelTxn.getFinalStatus() != null) {
-                    existingChannelTxn.setFinalStatus(channelTxn.getFinalStatus());
-                }
-                if (channelTxn.getSettlementDate() != null) {
-                    existingChannelTxn.setSettlementDate(channelTxn.getSettlementDate());
-                }
-                if (channelTxn.getRequestXml() != null) {
-                    existingChannelTxn.setRequestXml(channelTxn.getRequestXml());
-                }
-                if (channelTxn.getResponseXml() != null) {
-                    existingChannelTxn.setResponseXml(channelTxn.getResponseXml());
-                }
-
-                return existingChannelTxn;
-            })
-            .map(channelTxnRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, channelTxn.getId().toString())
-        );
-    }
 
     /**
      * {@code GET  /channel-txns} : get all the channelTxns.

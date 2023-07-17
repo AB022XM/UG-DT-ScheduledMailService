@@ -1,5 +1,6 @@
 package ug.co.absa.notify.config;
 
+
 /**
  * Application constants.
  */
@@ -10,6 +11,8 @@ public final class Constants {
 
     public static final String SYSTEM = "system";
     public static final String DEFAULT_LANGUAGE = "en";
+
+    public static final Long APP_ID =  01L;
 
     private Constants() {}
 }

@@ -105,7 +105,7 @@ public class AlertsTemplateTbResource {
      * or with status {@code 500 (Internal Server Error)} if the alertsTemplateTb couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/alerts-template-tbs/{id}", consumes = { "application/json", "application/merge-patch+json" })
+/*    @PatchMapping(value = "/alerts-template-tbs/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<AlertsTemplateTb> partialUpdateAlertsTemplateTb(
         @PathVariable(value = "id", required = false) final UUID id,
         @RequestBody AlertsTemplateTb alertsTemplateTb
@@ -194,7 +194,7 @@ public class AlertsTemplateTbResource {
             result,
             HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, alertsTemplateTb.getId().toString())
         );
-    }
+    }*/
 
     /**
      * {@code GET  /alerts-template-tbs} : get all the alertsTemplateTbs.
